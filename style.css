@@ -1,0 +1,193 @@
+/* Reset básico para padronizar as margens */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos gerais da página */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f0fa; /* Fundo suave levemente roxo */
+  color: #333333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Cabeçalho Principal */
+.cabecalho {
+  background: linear-gradient(135deg, #6c5ce7, #8e44ad); /* Roxo / Violeta vibrante */
+  color: #ffffff;
+  text-align: center;
+  padding: 25px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(108, 92, 231, 0.2);
+  margin-bottom: 25px;
+}
+
+.cabecalho h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.cabecalho .subtitulo {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* Conteúdo centralizado */
+.conteudo-principal {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Seção de Cards de Resumo */
+.secao-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+/* Aparência dos Cards: Bordas bem marcadas e coloridas com fundo escuro e texto branco */
+.card {
+  border-radius: 12px;
+  padding: 18px 15px;
+  text-align: center;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+.card p {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Cores específicas de cada Card */
+.card-media {
+  background-color: #6c5ce7; /* Roxo */
+  border: 3px solid #00cec9;  /* Borda Turquesa */
+}
+
+.card-faltas {
+  background-color: #e17055; /* Laranja/Vermelho para alertas */
+  border: 3px solid #fab1a0;
+}
+
+.card-bom {
+  background-color: #00b894; /* Verde */
+  border: 3px solid #55efc4;
+}
+
+.card-atencao {
+  background-color: #fdcb6e; /* Amarelo */
+  color: #2d3436;           /* Texto escuro no amarelo para facilitar leitura */
+  border: 3px solid #ffeaa7;
+}
+
+.card-frequencia {
+  background-color: #0984e3; /* Azul */
+  border: 3px solid #74b9ff;
+}
+
+.status-freq {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Seção da Tabela */
+.secao-tabela {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.secao-tabela h2 {
+  font-size: 1.3rem;
+  color: #6c5ce7;
+  margin-bottom: 15px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #00cec9; /* Detalhe Turquesa */
+}
+
+/* Responsividade da Tabela para Celular */
+.tabela-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px; /* Garante rolagem horizontal fluida em telas pequenas */
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #eef0f5;
+}
+
+th {
+  background-color: #6c5ce7;
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+tr:nth-child(even) {
+  background-color: #fcfaff;
+}
+
+tr:hover {
+  background-color: #f1edff;
+}
+
+/* Destaque para as situações na tabela */
+.situacao-bom {
+  color: #00b894;
+  font-weight: bold;
+}
+
+.situacao-atencao {
+  color: #d63031;
+  font-weight: bold;
+}
+
+.situacao-indisponivel {
+  color: #b2bec3;
+  font-style: italic;
+}
+
+/* Ajustes para telas bem pequenas */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  
+  .cabecalho h1 {
+    font-size: 1.7rem;
+  }
+  
+  .secao-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
