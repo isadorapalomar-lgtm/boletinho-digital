@@ -1,4 +1,11 @@
-// Dados brutos padronizados do 8º Ano (Array de Objetos)
+// Configuração fixa do aluno
+const CONFIG_ALUNO = {
+  turma: "8B",
+  numeroChamada: 17,
+  apiUrl: "https://boletim-api.profbt.com.br"
+};
+
+// Dados brutos padronizados do 8º Ano (Array de Objetos) - Dados locais de fallback
 const dadosBrutos = [
   { disciplina: "Língua Portuguesa", tri1: 82, tri2: "7,8", tri3: 85, faltas: [2, 1, 1] },
   { disciplina: "Matemática", tri1: 52, tri2: "5,8", tri3: null, faltas: [3, 2, 1] },
@@ -17,43 +24,81 @@ const dadosBrutos = [
   { disciplina: "Práticas Experimentais", tri1: 58, tri2: "6,2", tri3: 6.4, faltas: [1, 1, 1] }
 ];
 
+// Estado da aplicação na sessão
+let pinSessao = "";
+let disciplinasAtuais = [];
+
 /**
- * Função para normalizar notas para a escala de 0 a 10
+ * Função para normalizar notas antigas/locais para a escala de 0 a 10
  */
 function normalizarNota(valor) {
-  // Trata ausência de nota (vazio, null ou undefined)
   if (valor === null || valor === undefined || valor === "") {
     return null;
   }
-
-  // Converte texto com vírgula para número (ex: "7,8" -> 7.8)
   let notaNum = typeof valor === "string" ? parseFloat(valor.replace(",", ".")) : Number(valor);
-
-  // Se a conversão falhar (não for um número)
   if (isNaN(notaNum)) {
     return null;
   }
-
-  // Ajusta notas no formato 0-100 para 0-10 (ex: 82 vira 8.2)
   if (notaNum > 10 && notaNum <= 100) {
     notaNum = notaNum / 10;
   }
-
-  // Validação: notas fora de 0 a 10 são inválidas
   if (notaNum < 0 || notaNum > 10) {
     return null;
   }
-
   return notaNum;
 }
 
 /**
- * Função principal para processar e renderizar o boletim
+ * Prepara a estrutura padronizada de disciplinas (locais ou da API)
+ */
+function prepararDadosEmMemoria(dadosApi) {
+  if (dadosApi && Array.isArray(dadosApi.disciplinas) && dadosApi.disciplinas.length > 0) {
+    disciplinasAtuais = dadosApi.disciplinas.map(item => {
+      const f = Array.isArray(item.faltas) ? item.faltas : [item.faltas_t1, item.faltas_t2, item.faltas_t3];
+      return {
+        disciplina: item.disciplina,
+        tri1: item.tri1 !== undefined ? item.tri1 : item.nota_t1,
+        tri2: item.tri2 !== undefined ? item.tri2 : item.nota_t2,
+        tri3: item.tri3 !== undefined ? item.tri3 : item.nota_t3,
+        faltas: [
+          Number(f[0]) || 0,
+          Number(f[1]) || 0,
+          Number(f[2]) || 0
+        ]
+      };
+    });
+  } else {
+    disciplinasAtuais = JSON.parse(JSON.stringify(dadosBrutos));
+  }
+}
+
+/**
+ * Renderiza os cards e a tabela com os dados em memória
  */
 function construirBoletim() {
   const corpoTabela = document.getElementById("corpo-tabela");
-  corpoTabela.innerHTML = ""; // Limpa a tabela antes de preencher
+  corpoTabela.innerHTML = "";
 
   let somaMediasValidas = 0;
   let qtdDisciplinasComMedia = 0;
-  let totalFaltas
+  let totalFaltasGeral = 0;
+  let QtdDesempenhoBom = 0;
+  let QtdEmAtencao = 0;
+
+  disciplinasAtuais.forEach(item => {
+    const n1 = normalizarNota(item.tri1);
+    const n2 = normalizarNota(item.tri2);
+    const n3 = normalizarNota(item.tri3);
+
+    const notasValidas = [n1, n2, n3].filter(n => n !== null);
+    let media = null;
+    if (notasValidas.length > 0) {
+      const soma = notasValidas.reduce((acc, curr) => acc + curr, 0);
+      media = soma / notasValidas.length;
+      somaMediasValidas += media;
+      qtdDisciplinasComMedia++;
+    }
+
+    const f1 = Number(item.faltas[0]) || 0;
+    const f2 = Number(item.faltas[1]) || 0;
+    const f3

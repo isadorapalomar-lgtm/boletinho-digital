@@ -3,73 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Boletim Digital - 8º Ano</title>
+  <title>Boletim Digital</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="conteudo-principal">
+    <header class="cabecalho">
+      <h1>Boletim Digital</h1>
+      <p class="subtitulo">Série: 8º Ano | Turma: <span id="info-turma">8B</span> | Número: <span id="info-chamada">17</span></p>
+    </header>
 
-  <!-- Cabeçalho Principal -->
-  <header class="cabecalho">
-    <h1>Boletim Digital</h1>
-    <p class="subtitulo">Estudante Exemplo | 8º Ano</p>
-  </header>
-
-  <main class="conteudo-principal">
-    
-    <!-- Seção dos Cards de Resumo -->
-    <section class="secao-cards">
-      <div class="card card-media">
-        <h3>Média Geral</h3>
-        <p id="card-media-val">—</p>
+    <!-- Área de Acesso (PIN) -->
+    <section id="secao-acesso" class="secao-acesso">
+      <h2>Acesso ao Boletim</h2>
+      <p>Digite seu PIN para visualizar ou alterar suas notas.</p>
+      <div class="form-acesso">
+        <input type="password" id="campo-pin" placeholder="Digite o PIN" maxlength="20" autocomplete="off">
+        <button id="btn-entrar" type="button">Entrar</button>
       </div>
-
-      <div class="card card-faltas">
-        <h3>Total de Faltas</h3>
-        <p id="card-faltas-val">—</p>
-      </div>
-
-      <div class="card card-bom">
-        <h3>Bom Desempenho</h3>
-        <p id="card-bom-val">—</p>
-      </div>
-
-      <div class="card card-atencao">
-        <h3>Precisa de Atenção</h3>
-        <p id="card-atencao-val">—</p>
-      </div>
-
-      <div class="card card-frequencia">
-        <h3>Frequência Geral</h3>
-        <p id="card-frequencia-val">92%</p>
-        <span class="status-freq">Frequência adequada</span>
-      </div>
+      <p id="mensagem-status" class="mensagem-status"></p>
     </section>
 
-    <!-- Tabela de Disciplinas -->
-    <section class="secao-tabela">
-      <h2>Notas e Desempenho por Disciplina</h2>
-      
-      <div class="tabela-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Disciplina</th>
-              <th>1º Tri</th>
-              <th>2º Tri</th>
-              <th>3º Tri</th>
-              <th>Média</th>
-              <th>Faltas</th>
-              <th>Situação</th>
-            </tr>
-          </thead>
-          <tbody id="corpo-tabela">
-            <!-- As linhas serão inseridas automaticamente pelo JavaScript -->
-          </tbody>
-        </table>
+    <!-- Painel Principal (Boletim) -->
+    <main id="painel-boletim" style="display: none;">
+      <div class="barra-acoes" style="margin-bottom: 20px; text-align: right;">
+        <button id="btn-alterar-dados" type="button" class="btn-acao">Alterar dados</button>
       </div>
-    </section>
 
-  </main>
+      <!-- Seção de Cards -->
+      <section class="secao-cards">
+        <div class="card card-media">
+          <h3>Média Geral</h3>
+          <p id="card-media-valor">-</p>
+        </div>
+        <div class="card card-faltas">
+          <h3>Total Faltas</h3>
+          <p id="card-faltas-valor">-</p>
+        </div>
+        <div class="card card-bom">
+          <h3>Desempenho Bom</h3>
+          <p id="card-bom-valor">-</p>
+        </div>
+        <div class="card card-atencao">
+          <h3>Em Atenção</h3>
+          <p id="card-atencao-valor">-</p>
+        </div>
+        <div class="card card-frequencia">
+          <h3>Frequência</h3>
+          <p id="card-frequencia-valor">-</p>
+        </div>
+      </section>
+
+      <!-- Seção da Tabela -->
+      <section class="secao-tabela">
+        <h2>Notas e Faltas Por Disciplina</h2>
+        <div class="tabela-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Disciplina</th>
+                <th>1º Tri</th>
+                <th>2º Tri</th>
+                <th>3º Tri</th>
+                <th>Média</th>
+                <th>Faltas (T1/T2/T3)</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Seção do Formulário de Edição -->
+      <section id="secao-edicao" class="secao-tabela" style="display: none; margin-top: 25px;">
+        <h2>Editar Notas e Faltas</h2>
+        <div id="mensagem-erro-edicao" class="mensagem-status" style="color: #d63031; margin-bottom: 10px;"></div>
+        <div class="tabela-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Disciplina</th>
+                <th>Nota 1º T</th>
+                <th>Nota 2º T</th>
+                <th>Nota 3º T</th>
+                <th>Faltas 1º T</th>
+                <th>Faltas 2º T</th>
+                <th>Faltas 3º T</th>
+              </tr>
+            </thead>
+            <tbody id="corpo-edicao">
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top: 15px; text-align: right;">
+          <button id="btn-salvar-dados" type="button" class="btn-acao">Salvar alterações</button>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
